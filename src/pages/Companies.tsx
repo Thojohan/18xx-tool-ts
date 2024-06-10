@@ -6,7 +6,9 @@ import CorpRow from "../ui/CorpRow.tsx";
 import MinorRow from "../ui/MinorRow.tsx";
 import { useAppSelector } from "../hooks";
 import { selectGame } from "../Features/session/sessionSlice";
-import { CorpInt, MinorInt } from "../utility/interfaces.ts";
+import { CorpType, MinorType, PrivType } from "../utilities/types.ts";
+import Spinner from "../ui/Spinner.tsx";
+import ErrorMessage from "../ui/ErrorMessage.tsx";
 
 function Companies() {
   const selectedGame = useAppSelector(selectGame);
@@ -26,6 +28,20 @@ function Companies() {
   const corps = gameObject?.companiesJSON;
   const minors = gameObject?.minorsJSON;
 
+  if (isLoading)
+    return (
+      <div className="pb-12 space-y-8 pt-32">
+        <Spinner />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="pb-12 space-y-8 pt-32">
+        <ErrorMessage errorMsg={error?.message} />
+      </div>
+    );
+
   return (
     <div className="flex flex-col space-y-8 pb-12">
       <header className="font-secondary text-center">
@@ -37,7 +53,7 @@ function Companies() {
       </header>
       {privates && Object.keys(privates).length > 0 && (
         <div className="grid grid-cols-3 gap-4 mr-4">
-          {privates.map((privComp: object, i: number) => (
+          {privates.map((privComp: PrivType, i: number) => (
             <PrivCompRow
               key={i}
               currencySymbol={gameObject.currencySymbol}
@@ -48,14 +64,14 @@ function Companies() {
       )}
       {corps && Object.keys(corps).length > 0 && (
         <div className="grid grid-cols-3 gap-4 mr-4">
-          {corps.map((corp: CorpInt, i: number) => {
+          {corps.map((corp: CorpType, i: number) => {
             return <CorpRow key={i} corp={corp} />;
           })}
         </div>
       )}
       {minors && Object.keys(minors).length > 0 && (
         <div className="grid grid-cols-3 gap-4 mr-4">
-          {minors.map((minor: MinorInt, i: number) => {
+          {minors.map((minor: MinorType, i: number) => {
             return <MinorRow key={i} minor={minor} />;
           })}
         </div>

@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FormProps, useForm } from "react-hook-form";
 import Button from "../../ui/Button";
 import FormInput from "../../ui/FormInput";
 import JsonTemplate from "../../ui/JsonTemplate";
@@ -7,11 +7,17 @@ import { addGame } from "../../services/apiGames";
 import toast from "react-hot-toast";
 import { useRef } from "react";
 
+type Formvalues = {
+  gameName: string;
+  gameDesigner: string;
+  releaseYear: string;
+};
+
 function AddGameForm() {
-  const { register, handleSubmit, reset, formState } = useForm();
+  const { register, handleSubmit, reset, formState } = useForm<Formvalues>();
   const queryClient = useQueryClient();
   const { errors } = formState;
-  const ref = useRef(null);
+  const ref = useRef<HTMLFormElement | null>(null);
 
   const { isLoading, mutate } = useMutation({
     mutationFn: addGame,
@@ -27,7 +33,7 @@ function AddGameForm() {
     },
   });
 
-  function onSubmit(data) {
+  function onSubmit(data: object) {
     mutate(data);
   }
 
@@ -37,16 +43,18 @@ function AddGameForm() {
         <span>{`Sure you want to ${message}?`}</span>
         <span className="flex justify-around mt-2">
           <Button
+            type="button"
             variant="primary"
             clickHandler={() => {
               toast.dismiss(t.id);
-              message === "submit" && ref.current.requestSubmit();
+              message === "submit" && ref.current?.requestSubmit();
               message === "reset" && reset();
             }}
           >
             Yes
           </Button>
           <Button
+            type="button"
             variant="primary"
             clickHandler={() => {
               toast.dismiss(t.id);

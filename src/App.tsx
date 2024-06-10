@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AppLayout from "./ui/AppLayout";
 import FrontPage from "./pages/FrontPage";
-import { LocalState } from "./utility/LocalState";
+import { LocalState } from "./utilities/LocalState";
 import AddGame from "./pages/AddGame";
 import { Toaster } from "react-hot-toast";
 import StockMarket from "./pages/StockMarket";

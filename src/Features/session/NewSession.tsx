@@ -5,6 +5,8 @@ import { getGames } from "../../services/apiGames.ts";
 
 import { selectGame } from "./sessionSlice";
 import { useAppSelector } from "../../hooks";
+import Spinner from "../../ui/Spinner.tsx";
+import ErrorMessage from "../../ui/ErrorMessage.tsx";
 
 function NewSession() {
   const selectedGame = useAppSelector(selectGame);
@@ -22,6 +24,19 @@ function NewSession() {
   const gameObject =
     games?.find((el: { id: number }) => +el.id === +selectedGame) || [];
 
+  if (isLoading)
+    return (
+      <div className="pb-12 space-y-8 pt-32">
+        <Spinner />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="pb-12 space-y-8 pt-32">
+        <ErrorMessage errorMsg={error?.message} />
+      </div>
+    );
   return (
     <>
       <header className=" font-secondary text-center">

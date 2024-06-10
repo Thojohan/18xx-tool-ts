@@ -7,11 +7,10 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 function DarkMode() {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(selectDark);
-  // const { uiState, dispatch } = text);
+
 
   function darkHandler() {
     dispatch(darkToggle());
-    // localStorage.setItem("dark", !darkMode.toString());
   }
 
   return (

@@ -1,7 +1,7 @@
 import { getGames } from "../services/apiGames";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "./Spinner";
-import Error from "./Error";
+import ErrorMessage from "./ErrorMessage";
 import Button from "./Button";
 import toast from "react-hot-toast";
 import WarningToast from "./WarningToast";
@@ -49,13 +49,6 @@ function Sidebar() {
             toast.dismiss(t.id);
             dispatch(setSelectedGame(selectedGame === gameID ? "" : gameID));
             dispatch(stopOngoing());
-            // theme.dispatch({
-            //   type: "selected-game",
-            //   payload: `${
-            //     +theme.uiState.selectedGame === +gameID ? "" : +gameID
-            //   }`,
-            // });
-            // theme.dispatch({ type: "stop-ongoing" });
           }}
           noHandler={() => {
             toast.dismiss(t.id);
@@ -67,15 +60,11 @@ function Sidebar() {
     }
     if (isOngoing === false) {
       dispatch(setSelectedGame(selectedGame === gameID ? "" : gameID));
-      // theme.dispatch({
-      //   type: "selected-game",
-      //   payload: `${+theme.uiState.selectedGame === +gameID ? "" : +gameID}`,
-      // });
     }
   }
 
   if (isLoading) return <Spinner />;
-  if (error) return <Error errorMsg={error?.message} />;
+  if (error) return <ErrorMessage errorMsg={error?.message} />;
 
   return (
     <aside className="w-full h-full pl-4 text-md font-secondary pt-4 flex flex-col pr-2">

@@ -5,6 +5,8 @@ import PhaseTable from "../ui/PhaseTable";
 import TrainTable from "../ui/TrainTable";
 import { useAppSelector } from "../hooks";
 import { selectGame } from "../Features/session/sessionSlice";
+import Spinner from "../ui/Spinner";
+import ErrorMessage from "../ui/ErrorMessage";
 
 function Phases() {
   const selectedGame = useAppSelector(selectGame);
@@ -24,6 +26,19 @@ function Phases() {
   const phases = gameObject?.phasesJSON;
   const trains = gameObject?.trainsJSON;
 
+  if (isLoading)
+    return (
+      <div className="pb-12 space-y-8 pt-32">
+        <Spinner />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="pb-12 space-y-8 pt-32">
+        <ErrorMessage errorMsg={error?.message} />
+      </div>
+    );
   return (
     <div className="flex flex-col gap-12 pb-12">
       <header className="font-secondary text-center">

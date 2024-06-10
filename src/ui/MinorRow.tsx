@@ -1,6 +1,6 @@
-import { MinorInt } from "../utility/interfaces";
+import { MinorType } from "../utilities/types";
 
-function MinorRow({ minor }: { minor: MinorInt }) {
+function MinorRow({ minor }: { minor: MinorType }) {
   return (
     <div
       style={{

@@ -1,4 +1,4 @@
-function RevenueTrackerElement({ numb }) {
+function RevenueTrackerElement({ numb }: { numb: number }) {
   const isRound = numb % 5 === 0;
   console.log(isRound);
   return (

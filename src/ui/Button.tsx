@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 function Button({
   clickHandler = undefined,
   variant,
@@ -7,10 +9,13 @@ function Button({
   status = "",
   id = "",
 }: {
-  clickHandler?: undefined | ((a: unknown) => void);
+  clickHandler?:
+    | ((e: unknown) => void)
+    | ((e: React.MouseEvent<HTMLElement>) => void)
+    | undefined;
   variant: string;
   type: "submit" | "reset" | "button" | undefined;
-  children?: string;
+  children?: string | ReactNode;
   disabled?: boolean;
   status?: string;
   id?: string;

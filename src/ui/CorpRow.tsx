@@ -1,6 +1,6 @@
-import { CorpInt } from "../utility/interfaces";
+import { CorpType } from "../utilities/types";
 
-function CorpRow({ corp }: { corp: CorpInt }) {
+function CorpRow({ corp }: { corp: CorpType }) {
   return (
     <div
       style={{

@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { selectorSteps } from "../../services/Utility.ts";
 import Button from "../../ui/Button.tsx";
 import FormInput from "../../ui/FormInput.tsx";
-import { useForm } from "react-hook-form";
+import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import { getGames } from "../../services/apiGames.ts";
 import { selectGame, sessionObject, startOngoing } from "./sessionSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks.ts";
+import Spinner from "../../ui/Spinner.tsx";
+import ErrorMessage from "../../ui/ErrorMessage.tsx";
 
 function StartGameForm() {
   const dispatch = useAppDispatch();
@@ -49,12 +51,21 @@ function StartGameForm() {
     dispatch(sessionObject(data));
   }
 
-  function errorFunc(err: unknown) {
-    if (err?.message) console.log(err?.message);
-  }
+  if (isLoading)
+    return (
+      <div className="pb-12 space-y-8 pt-32">
+        <Spinner />
+      </div>
+    );
 
+  if (error)
+    return (
+      <div className="pb-12 space-y-8 pt-32">
+        <ErrorMessage errorMsg={error?.message} />
+      </div>
+    );
   return (
-    <form onSubmit={handleSubmit(submitFunc, errorFunc)}>
+    <form onSubmit={handleSubmit(submitFunc)}>
       <input
         type="hidden"
         value={gameObject.gameName}
@@ -97,7 +108,7 @@ function StartGameForm() {
           <FormInput
             key={i}
             register={{
-              ...register(`player${i}`, {
+              ...register(`player${i + 1}`, {
                 required: "This field is required",
               }),
             }}

@@ -1,6 +1,12 @@
-import { PrivInt } from "../utility/interfaces";
+import { PrivType } from "../utilities/types";
 
-function PrivCompRow({ privComp, currencySymbol }: {privComp: PrivInt, currencySymbol: string}) {
+function PrivCompRow({
+  privComp,
+  currencySymbol,
+}: {
+  privComp: PrivType;
+  currencySymbol: string;
+}) {
   return (
     <div className="flex flex-col py-4 bg-zinc-100 p-6 dark:bg-zinc-900">
       <p className="font-semibold flex justify-between">

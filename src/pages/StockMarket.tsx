@@ -5,6 +5,8 @@ import GameSelectedHeader from "../ui/GameSelectedHeader";
 import { useAppSelector } from "../hooks";
 import { selectDark } from "../Features/uiState/uiSlice";
 import { selectGame } from "../Features/session/sessionSlice";
+import Spinner from "../ui/Spinner";
+import ErrorMessage from "../ui/ErrorMessage";
 
 function StockMarket() {
   const darkMode = useAppSelector(selectDark);
@@ -22,6 +24,20 @@ function StockMarket() {
     (el: { id: number }) => el.id === +selectedGame
   );
   const market = gameObject?.marketJSON;
+
+  if (isLoading)
+    return (
+      <div className="pb-12 space-y-8 pt-32">
+        <Spinner />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="pb-12 space-y-8 pt-32">
+        <ErrorMessage errorMsg={error?.message} />
+      </div>
+    );
 
   return (
     <div className="pb-12 space-y-8">

@@ -1,13 +1,15 @@
+import { FormInputType } from "../utilities/types";
+
 function FormInput({
   rowID,
   inputType,
   isLoading,
   rowName = null,
-  register = null,
+  register = {},
   children,
-  error = null,
-  label = null,
-}) {
+  error = undefined,
+  label = "",
+}: FormInputType) {
   return (
     <div className="flex justify-around w-full ">
       <label className="w-[300px]" htmlFor={rowID}>

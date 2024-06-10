@@ -1,15 +1,15 @@
-import Button from "../../ui/Button";
+import Button from "../../ui/Button.tsx";
 import { BsExclamationTriangle } from "react-icons/bs";
-import { deleteGame } from "../../services/apiGames";
+import { deleteGame } from "../../services/apiGames.ts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import WarningToast from "../../ui/WarningToast.tsx";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { setSelectedGame } from "../session/sessionSlice.ts";
+import { selectGame, setSelectedGame } from "../session/sessionSlice.ts";
+import { useAppDispatch, useAppSelector } from "../../hooks.ts";
 
 function DeleteGame() {
-  const dispatch = useDispatch();
-  const selectedGame = useSelector((state) => state.session.selectedGame);
+  const dispatch = useAppDispatch();
+  const selectedGame = useAppSelector(selectGame);
   const queryClient = useQueryClient();
   const { isLoading, mutate } = useMutation({
     mutationFn: deleteGame,
@@ -25,7 +25,7 @@ function DeleteGame() {
     },
   });
 
-  function clickHandler(game) {
+  function clickHandler(game: number) {
     toast((t) => (
       <WarningToast
         yesHandler={() => {
@@ -46,7 +46,7 @@ function DeleteGame() {
       <Button
         variant="primary"
         type="button"
-        clickHandler={() => clickHandler(selectedGame)}
+        clickHandler={() => clickHandler(+selectedGame)}
         disabled={!selectedGame || isLoading}
       >
         <p className="flex items-center">
