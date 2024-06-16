@@ -1,15 +1,7 @@
 import { listWords, phaseColour, removeUnderscore } from "../services/Utility";
+import { PhaseTypes } from "../utilities/types";
 
-interface phaseInt {
-  name: string;
-  on: string;
-  train_limit: string;
-  tiles: Array<string>;
-  operating_rounds: string;
-  status: Array<string>;
-}
-
-function PhaseTable({ phases }: { phases: Array<phaseInt> }) {
+function PhaseTable({ phases }: { phases: Array<PhaseTypes> }) {
   return (
     <table className="w-[95%] text-sm">
       <caption className="text-xl font-bold">Phase Table</caption>
@@ -24,7 +16,7 @@ function PhaseTable({ phases }: { phases: Array<phaseInt> }) {
         </tr>
       </thead>
       <tbody>
-        {phases.map((phase: phaseInt, i) => {
+        {phases.map((phase: PhaseTypes, i) => {
           console.log(phaseColour(phase.tiles));
           return (
             <tr

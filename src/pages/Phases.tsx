@@ -7,6 +7,7 @@ import { useAppSelector } from "../hooks";
 import { selectGame } from "../Features/session/sessionSlice";
 import Spinner from "../ui/Spinner";
 import ErrorMessage from "../ui/ErrorMessage";
+import { PhaseTypes, TrainType } from "../utilities/types";
 
 function Phases() {
   const selectedGame = useAppSelector(selectGame);
@@ -23,8 +24,8 @@ function Phases() {
   const gameObject = games?.find(
     (el: { id: number }) => el.id === +selectedGame
   );
-  const phases = gameObject?.phasesJSON;
-  const trains = gameObject?.trainsJSON;
+  const phases: PhaseTypes[] = gameObject?.phasesJSON;
+  const trains: TrainType = gameObject?.trainsJSON;
 
   if (isLoading)
     return (

@@ -1,4 +1,10 @@
-function Slider({ handler, defaultValue }) {
+function Slider({
+  handler,
+  defaultValue,
+}: {
+  handler: () => void;
+  defaultValue: boolean;
+}) {
   return (
     <label className="relative inline-block w-12 h-6 bg-zinc-400 rounded-xl">
       <input

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ButtonType } from "../utilities/types.ts";
 
 function Button({
   clickHandler = undefined,
@@ -8,18 +8,7 @@ function Button({
   disabled,
   status = "",
   id = "",
-}: {
-  clickHandler?:
-    | ((e: unknown) => void)
-    | ((e: React.MouseEvent<HTMLElement>) => void)
-    | undefined;
-  variant: string;
-  type: "submit" | "reset" | "button" | undefined;
-  children?: string | ReactNode;
-  disabled?: boolean;
-  status?: string;
-  id?: string;
-}) {
+}: ButtonType) {
   if (variant === "listItem")
     return (
       <button

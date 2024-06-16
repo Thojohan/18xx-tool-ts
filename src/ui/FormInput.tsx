@@ -3,8 +3,8 @@ import { FormInputType } from "../utilities/types";
 function FormInput({
   rowID,
   inputType,
-  isLoading,
-  rowName = null,
+  isPending,
+  rowName = "",
   register = {},
   children,
   error = undefined,
@@ -20,7 +20,7 @@ function FormInput({
           <textarea
             className="w-5/6 mr-6 bg-zinc-200 h-32 pl-2 pr-2 dark:bg-zinc-700"
             id={rowID}
-            disabled={isLoading}
+            disabled={isPending}
             name={rowName || rowID}
             {...register}
           />
@@ -30,7 +30,7 @@ function FormInput({
             className={"w-5/6 mr-6 bg-zinc-200 dark:bg-zinc-700 pl-2"}
             id={rowID}
             type={inputType}
-            disabled={isLoading}
+            disabled={isPending}
             name={rowName || rowID}
             {...register}
           />

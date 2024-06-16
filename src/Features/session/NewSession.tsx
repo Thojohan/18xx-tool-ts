@@ -11,7 +11,6 @@ import ErrorMessage from "../../ui/ErrorMessage.tsx";
 function NewSession() {
   const selectedGame = useAppSelector(selectGame);
 
-  // const { uiState } = useContext(UiContext);
   const {
     data: games,
     isLoading,

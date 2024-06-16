@@ -1,7 +1,13 @@
 import { BsExclamationTriangle } from "react-icons/bs";
 import Button from "./Button";
 
-function TerminateToast({ yesHandler, noHandler, children }) {
+type HandlerType = {
+  yesHandler: (() => void);
+  noHandler: (() => void);
+  children: string
+}
+
+function TerminateToast({ yesHandler, noHandler, children } : HandlerType) {
   return (
     <div>
       <p className="flex gap-2 items-center">
@@ -14,10 +20,10 @@ function TerminateToast({ yesHandler, noHandler, children }) {
         </span>
       </p>
       <span className="flex justify-around mt-2">
-        <Button variant="primary" clickHandler={yesHandler}>
+        <Button variant="primary" type="button" clickHandler={yesHandler}>
           Yes
         </Button>
-        <Button variant="primary" clickHandler={noHandler}>
+        <Button variant="primary" type="button" clickHandler={noHandler}>
           No
         </Button>
       </span>

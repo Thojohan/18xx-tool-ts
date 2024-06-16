@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { selectorSteps } from "../../services/Utility.ts";
 import Button from "../../ui/Button.tsx";
 import FormInput from "../../ui/FormInput.tsx";
-import { SubmitErrorHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import { getGames } from "../../services/apiGames.ts";
 import { selectGame, sessionObject, startOngoing } from "./sessionSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks.ts";
 import Spinner from "../../ui/Spinner.tsx";
 import ErrorMessage from "../../ui/ErrorMessage.tsx";
+import { PlayerSessionType } from "../../utilities/types.ts";
 
 function StartGameForm() {
   const dispatch = useAppDispatch();
@@ -18,7 +19,7 @@ function StartGameForm() {
   const [count, setCount] = useState(0);
   const {
     data: games,
-    isLoading,
+    isPending,
     error,
   } = useQuery({
     queryFn: getGames,
@@ -37,7 +38,6 @@ function StartGameForm() {
     gameObject.bestPlayerCountFrom,
     gameObject.bestPlayerCountTo
   );
-  console.log(playerCountArray);
 
   inputValuesArray.current = selectorSteps(1, +count);
 
@@ -51,7 +51,7 @@ function StartGameForm() {
     dispatch(sessionObject(data));
   }
 
-  if (isLoading)
+  if (isPending)
     return (
       <div className="pb-12 space-y-8 pt-32">
         <Spinner />
@@ -104,12 +104,26 @@ function StartGameForm() {
         </span>
       </div>
       <div className="flex flex-col space-y-4 my-6">
-        {inputValuesArray.current.map((_el, i) => (
+        {inputValuesArray.current.map((el, i) => (
           <FormInput
             key={i}
+            inputType="text"
+            rowID={`${el}`}
             register={{
-              ...register(`player${i + 1}`, {
+              ...register(`${i + 1}-player`, {
                 required: "This field is required",
+                setValueAs: (v) => {
+                  try {
+                    return {
+                      playerName: v,
+                      cash: 0,
+                      value: 0,
+                      shares: {},
+                    } as PlayerSessionType;
+                  } catch (er) {
+                    return v;
+                  }
+                },
               }),
             }}
           >

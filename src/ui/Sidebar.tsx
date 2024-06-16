@@ -39,8 +39,8 @@ function Sidebar() {
 
   console.log(games);
 
-  function choseGame(e: Event) {
-    const eventTarget = e.target as HTMLInputElement;
+  function choseGame(e: unknown) {
+    const eventTarget = (e as Event).target as HTMLInputElement;
     const gameID = eventTarget.id;
     if (isOngoing) {
       toast((t) => (

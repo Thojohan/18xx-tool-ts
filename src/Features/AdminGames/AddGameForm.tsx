@@ -1,4 +1,4 @@
-import { FormProps, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Button from "../../ui/Button";
 import FormInput from "../../ui/FormInput";
 import JsonTemplate from "../../ui/JsonTemplate";
@@ -6,20 +6,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addGame } from "../../services/apiGames";
 import toast from "react-hot-toast";
 import { useRef } from "react";
-
-type Formvalues = {
-  gameName: string;
-  gameDesigner: string;
-  releaseYear: string;
-};
+import { FormTypes } from "../../utilities/types";
 
 function AddGameForm() {
-  const { register, handleSubmit, reset, formState } = useForm<Formvalues>();
+  const { register, handleSubmit, reset, formState } = useForm<FormTypes>();
   const queryClient = useQueryClient();
   const { errors } = formState;
   const ref = useRef<HTMLFormElement | null>(null);
 
-  const { isLoading, mutate } = useMutation({
+  const { isPending, mutate } = useMutation({
     mutationFn: addGame,
     onSuccess: () => {
       toast.success("Game successfully added");
@@ -37,6 +32,7 @@ function AddGameForm() {
     mutate(data);
   }
 
+  console.log(errors);
   function clickHandler(message: string) {
     toast((t) => (
       <p>
@@ -78,7 +74,7 @@ function AddGameForm() {
       <FormInput
         rowID="gameName"
         inputType="text"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.gameName?.message}
         register={{
           ...register("gameName", {
@@ -91,7 +87,7 @@ function AddGameForm() {
       <FormInput
         rowID="gameDesigner"
         inputType="text"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.gameDesigner?.message}
         register={{
           ...register("gameDesigner", {
@@ -104,7 +100,7 @@ function AddGameForm() {
       <FormInput
         rowID="releaseYear"
         inputType="number"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.releaseYear?.message}
         register={{
           ...register("releaseYear", {
@@ -117,7 +113,7 @@ function AddGameForm() {
       <FormInput
         rowID="playerCountFrom"
         inputType="number"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.playerCountFrom?.message}
         register={{
           ...register("playerCountFrom", {
@@ -130,7 +126,7 @@ function AddGameForm() {
       <FormInput
         rowID="playerCountTo"
         inputType="number"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.playerCountTo?.message}
         register={{
           ...register("playerCountTo", {
@@ -143,7 +139,7 @@ function AddGameForm() {
       <FormInput
         rowID="bestPlayerCountFrom"
         inputType="number"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.bestPlayerCountFrom?.message}
         register={{
           ...register("bestPlayerCountFrom", {
@@ -156,7 +152,7 @@ function AddGameForm() {
       <FormInput
         rowID="bestPlayerCountTo"
         inputType="number"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.bestPlayerCountTo?.message}
         register={{
           ...register("bestPlayerCountTo", {
@@ -169,7 +165,7 @@ function AddGameForm() {
       <FormInput
         rowID="bggLink"
         inputType="url"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.bggLink?.message}
         register={{
           ...register("bggLink", {
@@ -182,7 +178,7 @@ function AddGameForm() {
       <FormInput
         rowID="rulesLink"
         inputType="url"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.rulesLink?.message}
         register={{
           ...register("rulesLink", {
@@ -203,8 +199,8 @@ function AddGameForm() {
             <input
               className="mr-4 bg-zinc-200 w-6"
               value="fullCap"
-              disabled={isLoading}
-              name="capitalization"
+              disabled={isPending}
+              id="capitalization"
               type="radio"
               {...register("capitalization", {
                 required: "This field is required",
@@ -216,8 +212,8 @@ function AddGameForm() {
             <input
               className="mr-4 bg-zinc-200 w-6"
               value="incrementalCap"
-              disabled={isLoading}
-              name="capitalization"
+              disabled={isPending}
+              id="capitalization"
               type="radio"
               {...register("capitalization", {
                 required: "This field is required",
@@ -229,7 +225,7 @@ function AddGameForm() {
       <FormInput
         rowID="bankSize"
         inputType="textArea"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.bankSize?.message}
         register={{
           ...register("bankSize", {
@@ -249,7 +245,7 @@ function AddGameForm() {
       <FormInput
         rowID="currencySymbol"
         inputType="text"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.currencySymbol?.message}
         register={{
           ...register("currencySymbol", {
@@ -262,8 +258,8 @@ function AddGameForm() {
       <FormInput
         rowID="certLimitJSON"
         inputType="textArea"
-        isLoading={isLoading}
-        error={errors?.certLimit?.message}
+        isPending={isPending}
+        error={errors?.certLimitJSON?.message}
         register={{
           ...register("certLimitJSON", {
             required: "This field is required",
@@ -289,8 +285,8 @@ function AddGameForm() {
       <FormInput
         rowID="startingMoneyJSON"
         inputType="textArea"
-        isLoading={isLoading}
-        error={errors?.certLimit?.message}
+        isPending={isPending}
+        error={errors?.startingMoneyJSON?.message}
         register={{
           ...register("startingMoneyJSON", {
             required: "This field is required",
@@ -318,7 +314,7 @@ function AddGameForm() {
       <FormInput
         rowID="privatesJSON"
         inputType="textArea"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.privatesJSON?.message}
         register={{
           ...register("privatesJSON", {
@@ -362,7 +358,7 @@ function AddGameForm() {
       <FormInput
         rowID="minorsJSON"
         inputType="textArea"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.minorsJSON?.message}
         register={{
           ...register("minorsJSON", {
@@ -395,7 +391,7 @@ function AddGameForm() {
       <FormInput
         rowID="companiesJSON"
         inputType="textArea"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.companiesJSON?.message}
         register={{
           ...register("companiesJSON", {
@@ -429,7 +425,7 @@ function AddGameForm() {
       <FormInput
         rowID="phasesJSON"
         inputType="textArea"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.phasesJSON?.message}
         register={{
           ...register("phasesJSON", {
@@ -460,7 +456,7 @@ function AddGameForm() {
       <FormInput
         rowID="trainsJSON"
         inputType="textArea"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.trainsJSON?.message}
         register={{
           ...register("trainsJSON", {
@@ -487,7 +483,7 @@ function AddGameForm() {
       <FormInput
         rowID="marketJSON"
         inputType="textArea"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.marketJSON?.message}
         register={{
           ...register("marketJSON", {
@@ -514,7 +510,7 @@ function AddGameForm() {
       <FormInput
         rowID="mcGuffins"
         inputType="textArea"
-        isLoading={isLoading}
+        isPending={isPending}
         error={errors?.mcGuffins?.message}
         register={{
           ...register("mcGuffins", {
@@ -528,7 +524,7 @@ function AddGameForm() {
         <Button
           variant="primary"
           type="button"
-          disabled={isLoading}
+          disabled={isPending}
           clickHandler={() => clickHandler("reset")}
         >
           Reset form
@@ -537,7 +533,7 @@ function AddGameForm() {
           variant="primary"
           type="button"
           clickHandler={() => clickHandler("submit")}
-          disabled={isLoading}
+          disabled={isPending}
         >
           Submit new game
         </Button>

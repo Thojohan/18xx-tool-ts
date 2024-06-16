@@ -11,7 +11,7 @@ function DeleteGame() {
   const dispatch = useAppDispatch();
   const selectedGame = useAppSelector(selectGame);
   const queryClient = useQueryClient();
-  const { isLoading, mutate } = useMutation({
+  const { isPending, mutate } = useMutation({
     mutationFn: deleteGame,
     onSuccess: () => {
       toast.success("Game successfully deleted");
@@ -47,7 +47,7 @@ function DeleteGame() {
         variant="primary"
         type="button"
         clickHandler={() => clickHandler(+selectedGame)}
-        disabled={!selectedGame || isLoading}
+        disabled={!selectedGame || isPending}
       >
         <p className="flex items-center">
           <BsExclamationTriangle className="text-red-800 dark:text-red-400" />

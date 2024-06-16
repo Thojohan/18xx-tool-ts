@@ -2,7 +2,7 @@ function GameSelectedHeader({
   condition,
   gameObject,
 }: {
-  condition: string;
+  condition: unknown;
   gameObject: { gameName: string };
 }) {
   return (

@@ -1,8 +1,19 @@
-import { useSelector } from "react-redux";
 import { distance } from "../services/Utility";
+import { useAppSelector } from "../hooks";
+import { selectDark } from "../Features/uiState/uiSlice";
+import { TrainType } from "../utilities/types";
 
-function TrainTable({ trains, currencySymbol }) {
-  const darkMode = useSelector((state) => state.ui.darkMode);
+function TrainTable({
+  trains,
+  currencySymbol,
+}: {
+  trains: TrainType;
+  currencySymbol: string;
+}) {
+  useAppSelector;
+  const darkMode = useAppSelector(selectDark);
+
+  console.log(trains);
 
   return (
     <table className="w-[95%] text-sm">
@@ -61,7 +72,7 @@ function TrainTable({ trains, currencySymbol }) {
               </td>
               {
                 <td>
-                  {distance(train.distance).map((el, i) => (
+                  {distance(train.distance).map((el: string, i: number) => (
                     <p className="capitalize" key={i}>
                       {el}
                     </p>
